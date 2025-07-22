@@ -1,2 +1,4 @@
 # hydrohelper
-Hydro Helper 3
+
+This repository contains a simple Hydro Helper 3.0 web page.
+Open `index.html` in your browser to use the form for logging grow data and a basic chat box.
