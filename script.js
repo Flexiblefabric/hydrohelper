@@ -27,13 +27,51 @@ form.addEventListener('submit', (e) => {
     form.reset();
 });
 
-sendChat.addEventListener('click', () => {
+const openaiApiKey = 'YOUR_OPENAI_API_KEY';
+const openaiUrl = 'https://api.openai.com/v1/chat/completions';
+
+async function sendToGPT(prompt) {
+    const response = await fetch(openaiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${openaiApiKey}`
+        },
+        body: JSON.stringify({
+            model: 'gpt-4',
+            messages: [{ role: 'user', content: prompt }]
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`OpenAI API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content.trim();
+}
+
+function appendMessage(sender, text) {
+    const p = document.createElement('p');
+    p.textContent = `${sender}: ${text}`;
+    chatbox.appendChild(p);
+}
+
+sendChat.addEventListener('click', async () => {
     const text = chatInput.value.trim();
     if (text) {
-        const p = document.createElement('p');
-        p.textContent = text;
-        chatbox.appendChild(p);
+        appendMessage('You', text);
         chatInput.value = '';
+        chatbox.scrollTop = chatbox.scrollHeight;
+
+        try {
+            const reply = await sendToGPT(text);
+            appendMessage('Assistant', reply);
+        } catch (err) {
+            appendMessage('Error', 'Failed to fetch response');
+            console.error(err);
+        }
+
         chatbox.scrollTop = chatbox.scrollHeight;
     }
 });
