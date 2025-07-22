@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydro Helper 3.0</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Hydro Helper 3.0</h1>
+    <form id="grow-form">
+        <label for="user">User:</label>
+        <input type="text" id="user" name="user" required>
+        <label for="plant">Plant Type:</label>
+        <input type="text" id="plant" name="plant" required>
+        <label for="ec">EC:</label>
+        <input type="number" step="0.01" id="ec" name="ec" required>
+        <label for="ph">pH:</label>
+        <input type="number" step="0.01" id="ph" name="ph" required>
+        <label for="notes">Notes:</label>
+        <textarea id="notes" name="notes"></textarea>
+        <button type="submit">Log Grow Data</button>
+    </form>
+
+    <div id="chat-container">
+        <div id="chatbox"></div>
+        <input type="text" id="chat-input" placeholder="Type a message...">
+        <button id="send-chat">Send</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
